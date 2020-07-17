@@ -42,3 +42,6 @@ nbproject/*
 # Sass preprocessor
 .sass-cache/
 /vendor/
+
+# cakephp
+schema-dump-default.lock
