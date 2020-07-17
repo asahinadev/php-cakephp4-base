@@ -1,57 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja" class="h-100">
+<head>
 <?php
 /**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
  *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link          https://cakephp.org CakePHP(tm) Project
- * @since         0.10.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
  * @var \App\View\AppView $this
  */
-
-$cakeDescription = 'CakePHP: the rapid development php framework';
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-    <?= $this->Html->charset() ?>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>
-        <?= $cakeDescription ?>:
-        <?= $this->fetch('title') ?>
-    </title>
-    <?= $this->Html->meta('icon') ?>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><?= $this->fetch('title') ?></title>
+<link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+<?php
+echo $this->Html->meta('icon');
+echo $this->fetch('meta');
+echo $this->Html->css([
+    'bootstrap5/bootstrap.min',
+    'fontawesome5/all.min',
+    'common'
+]);
+echo $this->fetch('css');
+echo $this->Html->script([
+    'bootstrap5/bootstrap.min'
+]);
+echo $this->fetch('script');
+?>
+<meta name="theme-color" content="#7952b3">
+<style>
+.bd-placeholder-img {
+	font-size: 1.125rem;
+	text-anchor: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
 
-    <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
+@media ( min-width : 768px) {
+	.bd-placeholder-img-lg {
+		font-size: 3.5rem;
+	}
+}
 
-    <?= $this->Html->css(['normalize.min', 'milligram.min', 'cake']) ?>
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+body {
+	padding: 60px 15px 0;
+}
+</style>
 
-    <?= $this->fetch('meta') ?>
-    <?= $this->fetch('css') ?>
-    <?= $this->fetch('script') ?>
 </head>
-<body>
-    <nav class="top-nav">
-        <div class="top-nav-title">
-            <a href="<?= $this->Url->build('/') ?>"><span>Cake</span>PHP</a>
-        </div>
-        <div class="top-nav-links">
-            <a target="_blank" rel="noopener" href="https://book.cakephp.org/4/">Documentation</a>
-            <a target="_blank" rel="noopener" href="https://api.cakephp.org/4/">API</a>
-        </div>
-    </nav>
-    <main class="main">
-        <div class="container">
-            <?= $this->Flash->render() ?>
-            <?= $this->fetch('content') ?>
-        </div>
-    </main>
-    <footer>
-    </footer>
+<body class="d-flex flex-column h-100">
+
+	<header>
+		<!-- Fixed navbar -->
+		<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="#"><?= $this->fetch('title') ?></a>
+
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<div class="collapse navbar-collapse" id="navbarCollapse">
+				<?php
+    echo $this->Html->nestedList(
+        [
+            $this->Html->link("HOME", "/", [
+                "class" => "nav-link",
+                "id" => "HOME"
+            ]),
+            $this->Html->link("USER", "/users", [
+                "class" => "nav-link",
+                "id" => "USER"
+            ]),
+        ], [
+            "class" => "navbar-nav mr-auto mb-2 mb-md-0"
+        ], [
+            "class" => "nav-item"
+        ])?>
+					<form class="d-flex form-outline">
+						<button class="btn btn-danger btn-sm" type="submit">Login</button>
+					</form>
+				</div>
+			</div>
+		</nav>
+	</header>
+
+	<!-- Begin page content -->
+	<main class="flex-shrink-0">
+        <?= $this->Flash->render() ?>
+        <?= $this->fetch('content') ?>
+	</main>
+
+	<footer class="footer mt-auto py-3 bg-light">
+		<div class="container"></div>
+	</footer>
+
 </body>
 </html>
+
