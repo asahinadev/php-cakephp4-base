@@ -1,18 +1,19 @@
 <?php
-declare(strict_types=1);
+declare(strict_types = 1);
 
 /**
  * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * Copyright (c) Cake Software Foundation, Inc.
+ * (https://cakefoundation.org)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link          https://cakephp.org CakePHP(tm) Project
- * @since         0.10.8
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @copyright Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * @link https://cakephp.org CakePHP(tm) Project
+ * @since 0.10.8
+ * @license https://opensource.org/licenses/mit-license.php MIT License
  */
 
 /*
@@ -57,14 +58,16 @@ use Cake\Utility\Security;
  * If you use .env files, be careful to not commit them to source control to avoid
  * security risks. See https://github.com/josegonzalez/php-dotenv#general-security-information
  * for more information for recommended practices.
-*/
-// if (!env('APP_NAME') && file_exists(CONFIG . '.env')) {
-//     $dotenv = new \josegonzalez\Dotenv\Loader([CONFIG . '.env']);
-//     $dotenv->parse()
-//         ->putenv()
-//         ->toEnv()
-//         ->toServer();
-// }
+ */
+if (! env('APP_NAME') && file_exists(CONFIG . '.env')) {
+    $dotenv = new \josegonzalez\Dotenv\Loader([
+        CONFIG . '.env'
+    ]);
+    $dotenv->parse()
+        ->putenv()
+        ->toEnv()
+        ->toServer();
+}
 
 /*
  * Read configuration file and inject configuration into various
@@ -77,7 +80,8 @@ use Cake\Utility\Security;
 try {
     Configure::config('default', new PhpConfig());
     Configure::load('app', 'default', false);
-} catch (\Exception $e) {
+}
+catch (\Exception $e) {
     exit($e->getMessage() . "\n");
 }
 
@@ -94,10 +98,10 @@ if (file_exists(CONFIG . 'app_local.php')) {
  * for a short time.
  */
 if (Configure::read('debug')) {
-    Configure::write('Cache._cake_model_.duration', '+2 minutes');
-    Configure::write('Cache._cake_core_.duration', '+2 minutes');
-    // disable router cache during development
-    Configure::write('Cache._cake_routes_.duration', '+2 seconds');
+    $duration = '+30 seconds';
+    Configure::write('Cache._cake_model_.duration', $duration);
+    Configure::write('Cache._cake_core_.duration', $duration);
+    Configure::write('Cache._cake_routes_.duration', $duration);
 }
 
 /*
@@ -123,7 +127,8 @@ ini_set('intl.default_locale', Configure::read('App.defaultLocale'));
 $isCli = PHP_SAPI === 'cli';
 if ($isCli) {
     (new ConsoleErrorHandler(Configure::read('Error')))->register();
-} else {
+}
+else {
     (new ErrorHandler(Configure::read('Error')))->register();
 }
 
@@ -139,7 +144,7 @@ if ($isCli) {
  * This URL is used as the base of all absolute links.
  */
 $fullBaseUrl = Configure::read('App.fullBaseUrl');
-if (!$fullBaseUrl) {
+if (! $fullBaseUrl) {
     $s = null;
     if (env('HTTPS')) {
         $s = 's';
